@@ -1,0 +1,139 @@
+# ===== MIDDLEWARE TEST CASES =====
+# Testing Logging, Authentication, and Error Handling Middleware
+
+@BaseUrl = https://localhost:7229
+@Token = Bearer token-techhive-2024
+@InvalidToken = Bearer invalid-token-123
+
+### ===== TEST 1: Health Check (Public Endpoint - No Auth Required) =====
+GET {{BaseUrl}}/api/health
+Accept: application/json
+
+###
+
+### ===== TEST 2: Get All Users WITHOUT Token (Should return 401 Unauthorized) =====
+GET {{BaseUrl}}/api/users
+Accept: application/json
+
+###
+
+### ===== TEST 3: Get All Users WITH Valid Token (Should return 200) =====
+GET {{BaseUrl}}/api/users
+Authorization: {{Token}}
+Accept: application/json
+
+###
+
+### ===== TEST 4: Get All Users WITH Invalid Token (Should return 401) =====
+GET {{BaseUrl}}/api/users
+Authorization: {{InvalidToken}}
+Accept: application/json
+
+###
+
+### ===== TEST 5: Get User by ID WITH Valid Token (Should return 200) =====
+GET {{BaseUrl}}/api/users/1
+Authorization: {{Token}}
+Accept: application/json
+
+###
+
+### ===== TEST 6: Get Non-Existent User WITH Token (Should return 404) =====
+GET {{BaseUrl}}/api/users/999
+Authorization: {{Token}}
+Accept: application/json
+
+###
+
+### ===== TEST 7: Create User WITHOUT Token (Should return 401) =====
+POST {{BaseUrl}}/api/users
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "test@techhive.com",
+  "department": "IT"
+}
+
+###
+
+### ===== TEST 8: Create User WITH Valid Token (Should return 201) =====
+POST {{BaseUrl}}/api/users
+Authorization: {{Token}}
+Content-Type: application/json
+
+{
+  "name": "Budi Santoso",
+  "email": "budi.santoso@techhive.com",
+  "department": "Finance",
+  "position": "Finance Manager"
+}
+
+###
+
+### ===== TEST 9: Create User WITH Invalid Email Format WITH Token (Should return 400) =====
+POST {{BaseUrl}}/api/users
+Authorization: {{Token}}
+Content-Type: application/json
+
+{
+  "name": "Invalid Email User",
+  "email": "not-an-email",
+  "department": "Marketing"
+}
+
+###
+
+### ===== TEST 10: Create User WITH Missing Name WITH Token (Should return 400) =====
+POST {{BaseUrl}}/api/users
+Authorization: {{Token}}
+Content-Type: application/json
+
+{
+  "name": "",
+  "email": "nope@techhive.com",
+  "department": "Operations"
+}
+
+###
+
+### ===== TEST 11: Update User WITH Valid Token (Should return 200) =====
+PUT {{BaseUrl}}/api/users/1
+Authorization: {{Token}}
+Content-Type: application/json
+
+{
+  "name": "John Doe Updated",
+  "email": "john.updated@techhive.com",
+  "department": "Engineering",
+  "position": "Tech Lead"
+}
+
+###
+
+### ===== TEST 12: Delete User WITHOUT Token (Should return 401) =====
+DELETE {{BaseUrl}}/api/users/2
+Accept: application/json
+
+###
+
+### ===== TEST 13: Delete User WITH Valid Token (Should return 204) =====
+DELETE {{BaseUrl}}/api/users/2
+Authorization: {{Token}}
+Accept: application/json
+
+###
+
+### ===== TEST 14: Multiple Valid Tokens - Token 2 =====
+GET {{BaseUrl}}/api/users
+Authorization: Bearer token-hr-department
+Accept: application/json
+
+###
+
+### ===== TEST 15: Multiple Valid Tokens - Token 3 =====
+GET {{BaseUrl}}/api/users
+Authorization: Bearer token-it-department
+Accept: application/json
+
+###

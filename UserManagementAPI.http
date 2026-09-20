@@ -1,0 +1,113 @@
+@BaseUrl = https://localhost:5001
+@ContentType = application/json
+
+### ===== HEALTH CHECK =====
+### Check if API is running
+GET {{BaseUrl}}/api/health
+
+###
+
+### ===== GET ALL USERS =====
+### Retrieve list of all users
+GET {{BaseUrl}}/api/users
+Accept: {{ContentType}}
+
+###
+
+### ===== GET USER BY ID =====
+### Retrieve a specific user by ID (ID: 1)
+GET {{BaseUrl}}/api/users/1
+Accept: {{ContentType}}
+
+###
+
+### ===== CREATE NEW USER =====
+### Add a new user to the system
+POST {{BaseUrl}}/api/users
+Content-Type: {{ContentType}}
+
+{
+  "name": "Ahmad Nurhadi",
+  "email": "ahmad.nurhadi@techhive.com",
+  "department": "IT",
+  "position": "DevOps Engineer"
+}
+
+###
+
+### ===== CREATE ANOTHER USER =====
+### Add another user
+POST {{BaseUrl}}/api/users
+Content-Type: {{ContentType}}
+
+{
+  "name": "Siti Nurhaliza",
+  "email": "siti.nurhaliza@techhive.com",
+  "department": "Marketing",
+  "position": "Marketing Manager"
+}
+
+###
+
+### ===== CREATE USER WITH DUPLICATE EMAIL (CONFLICT) =====
+### Test error handling - this should return 409 Conflict
+POST {{BaseUrl}}/api/users
+Content-Type: {{ContentType}}
+
+{
+  "name": "John Duplicate",
+  "email": "john.doe@techhive.com",
+  "department": "Engineering",
+  "position": "Developer"
+}
+
+###
+
+### ===== CREATE USER WITH MISSING FIELDS (BAD REQUEST) =====
+### Test validation - this should return 400 Bad Request
+POST {{BaseUrl}}/api/users
+Content-Type: {{ContentType}}
+
+{
+  "name": "Incomplete User"
+}
+
+###
+
+### ===== UPDATE USER =====
+### Update an existing user (ID: 1)
+PUT {{BaseUrl}}/api/users/1
+Content-Type: {{ContentType}}
+
+{
+  "name": "John Doe Updated",
+  "email": "john.doe.updated@techhive.com",
+  "department": "Engineering",
+  "position": "Tech Lead"
+}
+
+###
+
+### ===== UPDATE USER WITH DUPLICATE EMAIL (CONFLICT) =====
+### Test error handling - trying to update with existing email
+PUT {{BaseUrl}}/api/users/1
+Content-Type: {{ContentType}}
+
+{
+  "name": "John Doe",
+  "email": "jane.smith@techhive.com",
+  "department": "Engineering",
+  "position": "Developer"
+}
+
+###
+
+### ===== DELETE USER =====
+### Remove a user from the system (ID: 2)
+DELETE {{BaseUrl}}/api/users/2
+
+###
+
+### ===== GET USER THAT DOESN'T EXIST (NOT FOUND) =====
+### Test error handling - user doesn't exist
+GET {{BaseUrl}}/api/users/999

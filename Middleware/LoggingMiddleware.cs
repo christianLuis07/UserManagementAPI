@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 namespace UserManagementAPI.Middleware
 {
     /// <summary>
-    /// Middleware untuk mencatat semua permintaan HTTP dan respons keluar
+    /// Middleware that logs incoming HTTP requests and outgoing responses.
     /// </summary>
     public class LoggingMiddleware
     {

@@ -21,14 +21,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// ===== Configure Middleware Pipeline (Order matters!) =====
-// 1. Error Handling Middleware (First - untuk catch exception)
+// ===== Configure middleware pipeline (order matters) =====
+// 1. Error handling middleware (first) - catches exceptions from downstream
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
-// 2. Authentication Middleware (Kedua - untuk validasi token)
+// 2. Authentication middleware (second) - validates bearer tokens
 app.UseMiddleware<AuthenticationMiddleware>();
 
-// 3. Logging Middleware (Terakhir - untuk mencatat semua request/response)
+// 3. Logging middleware (last) - records requests and responses
 app.UseMiddleware<LoggingMiddleware>();
 
 var users = new Dictionary<int, User>

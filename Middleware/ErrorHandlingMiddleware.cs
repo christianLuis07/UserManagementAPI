@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Http;
 namespace UserManagementAPI.Middleware
 {
     /// <summary>
-    /// Middleware untuk menangani error dan exception secara terpusat
-    /// Memastikan semua error dikembalikan dalam format JSON yang konsisten
+    /// Middleware that handles errors and exceptions centrally.
+    /// Ensures all errors are returned in a consistent JSON format.
     /// </summary>
     public class ErrorHandlingMiddleware
     {
@@ -86,7 +86,7 @@ namespace UserManagementAPI.Middleware
     }
 
     /// <summary>
-    /// Model untuk respons error yang konsisten
+    /// Model for a consistent error response payload.
     /// </summary>
     public class ErrorResponse
     {

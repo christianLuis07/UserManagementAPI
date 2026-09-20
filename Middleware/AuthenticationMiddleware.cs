@@ -7,22 +7,22 @@ using Microsoft.AspNetCore.Http;
 namespace UserManagementAPI.Middleware
 {
     /// <summary>
-    /// Middleware untuk autentikasi menggunakan token Bearer
-    /// Memvalidasi token dari header Authorization dan memberikan akses hanya untuk token yang valid
+    /// Middleware for Bearer token authentication.
+    /// Validates the Authorization header and grants access only to requests with a valid token.
     /// </summary>
     public class AuthenticationMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<AuthenticationMiddleware> _logger;
 
-        // Daftar endpoint yang tidak memerlukan autentikasi
+        // Endpoints that do not require authentication
         private static readonly HashSet<string> PublicEndpoints = new(StringComparer.OrdinalIgnoreCase)
         {
             "/api/health",
             "/openapi/v1.json"
         };
 
-        // Token yang valid untuk testing (dalam production, gunakan database/JWT)
+        // Valid tokens for testing (use a database or JWT in production)
         private static readonly Dictionary<string, string> ValidTokens = new()
         {
             { "token-techhive-2024", "TechHive Admin" },
@@ -40,7 +40,7 @@ namespace UserManagementAPI.Middleware
         {
             var path = context.Request.Path.Value ?? string.Empty;
 
-            // Skip authentication untuk public endpoints
+            // Skip authentication for public endpoints
             if (IsPublicEndpoint(path))
             {
                 _logger.LogInformation("✓ Public endpoint accessed: {Path}", path);
